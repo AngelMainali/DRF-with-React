@@ -6,24 +6,26 @@ import { Routes, Route } from 'react-router-dom';
 import HomeScreen from './components/screens/HomeScreen';    
 import LoginScreen from './components/screens/LoginScreen';    
 import SignupScreen from './components/screens/SignupScreen';    
-import CartScreen from './components/screens/CartScreen';    
-
+import CartScreen from './components/screens/CartScreen';  
+import ProductScreen from './components/screens/ProductScreen';
 
 function App() {
   return (
     <>
-  
       <Header />
-      <Routes>
-        <Route exact path='/' element={<HomeScreen />}></Route>
-        <Route exact path='/login' element={<LoginScreen/>}></Route>
-        <Route exact path='/signup' element={<SignupScreen />}></Route>
-        <Route exact path='/cart' element={<CartScreen />}></Route>
-      </Routes>
-      < Footer/>
-   
+      <Container>
+        <Routes>
+          <Route path='/' element={<HomeScreen />} />
+          <Route path='/login' element={<LoginScreen />} />
+          <Route path='/signup' element={<SignupScreen />} />
+          <Route path='/cart' element={<CartScreen />} />
+          <Route path='/product/:id' element={<ProductScreen />} />
+          <Route path="*" element={<h2>404 Not Found</h2>} />
+        </Routes>
+      </Container>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

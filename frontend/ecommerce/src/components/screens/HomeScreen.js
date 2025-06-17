@@ -1,6 +1,8 @@
+// src/screens/HomeScreen.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import Product from '../Product';
 
 function HomeScreen() {
   const [products, setProducts] = useState([]);
@@ -21,15 +23,7 @@ function HomeScreen() {
       <Row>
         {products.map(product => (
           <Col key={product._id} sm={12} md={6} lg={4} xl={3} className="mb-4">
-            <Card className="p-3">
-              <Card.Body>
-                <Card.Title>{product.product}</Card.Title>
-                <Card.Text>
-                  Category: {product.category} <br />
-                  Price: Rs. {product.price}
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <Product product={product} />
           </Col>
         ))}
       </Row>
