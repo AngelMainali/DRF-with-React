@@ -1,7 +1,7 @@
-// src/components/Product.js
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Rating from '../components/Rating';
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
@@ -24,10 +24,8 @@ function Product({ product }) {
         </Card.Title>
         <Card.Text>
           Brand: {product.product_brand} <br />
-          Category: {product.product_category} <br />
-          Info: {product.product_info} <br />
-          Rating: {product.rating} ⭐ <br />
           Price: Rs. {product.price} <br />
+           <Rating value={product.rating} text={`${product.num_reviews} reviews`} /> <br />
           In Stock: {product.stock_count > 0 ? 'Yes' : 'Out of Stock'}
         </Card.Text>
       </Card.Body>

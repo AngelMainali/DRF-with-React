@@ -8,6 +8,7 @@ class Product(models.Model):
     product_brand = models.CharField(max_length=200, null=True, blank=True)
     product_category = models.CharField(max_length=200, null=True, blank=True)
     product_info = models.TextField(null=True, blank=True)
+    num_reviews = models.IntegerField(null=True, blank=True, default=0)
     rating = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     stock_count = models.IntegerField(null=True, blank=True, default=0)
