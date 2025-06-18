@@ -1,24 +1,37 @@
-// src/screens/ProductScreen.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Card, Container, Spinner, Alert, Button, Row, Col } from 'react-bootstrap';
 import Rating from '../Rating';
-import { listProductDetails } from '../../actions/productActions';
-
-
+import axios from 'axios';
 
 function ProductScreen() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    dispatch(listProductDetails(id));
-  }, [dispatch, id]);
+    async function fetchProduct() {
+      try {
+        setLoading(true);
+        setError('');
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/product/${id}`);
+        setProduct(data);
+      } catch (err) {
+        setError(
+          err.response && err.response.data.detail
+            ? err.response.data.detail
+            : err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProduct();
+  }, [id]);
 
   const handleAddToCart = () => {
     alert('Added to cart!');
@@ -31,10 +44,12 @@ function ProductScreen() {
       </Button>
 
       {loading ? (
-        <div className="text-center"><Spinner animation="border" /> Loading...</div>
+        <div className="text-center">
+          <Spinner animation="border" /> Loading...
+        </div>
       ) : error ? (
         <Alert variant="danger" className="text-center">{error}</Alert>
-      ) : (
+      ) : product ? (
         <Row>
           <Col md={6}>
             <Card>
@@ -73,7 +88,7 @@ function ProductScreen() {
             </Card>
           </Col>
         </Row>
-      )}
+      ) : null}
     </Container>
   );
 }
